@@ -1,5 +1,16 @@
 #include <stdio.h>
 
+// Declare new types and constants here
+typedef enum{
+        monday,
+        tuesday,
+        wednesday,
+        thursday,
+        friday,
+        saturday,
+        sunday
+    } WEEKDAY;
+
 int main(void) {
     printf("Hello World!\n");
 
@@ -69,9 +80,49 @@ int main(void) {
     printf("Third price: %u\n", *(prices + 2));
 
     char name[20];
-    printf("Enter your name: ");
-    scanf("%s", name);
-    printf("you entered %s", name); /*It does not print all my name whenever I separate it with spaces. Why?*/
+    // printf("Enter your name: ");
+    // scanf("%s", name);
+    // printf("you entered %s\n\n", name); /*It does not print all my name whenever I separate it with spaces. Why?*/
+
+    // STATIC VARIABLE: a variable which initialixed at 0 if no initial value is specified
+    // and it retains the value across function calls.
+    int incrementAge() {
+        static int age; /* We can also omit initializing age to 0 in static int age = 0; , and just write
+static int age; because static variables are automatically set to 0 when created. */
+        age++;
+        return age;
+    }
+
+    printf("Increment age\n");
+    printf("%d\n", incrementAge());
+    printf("%d\n", incrementAge());
+    printf("%d\n", incrementAge());
+    printf("%d\n", incrementAge());
+    printf("%d\n", incrementAge());
+    printf("%d\n", incrementAge());
+
+    int incrementAgeArray(); {
+        static int ages[3];
+        ages[0]++;
+        return ages[0];
+    }
+
+    printf("Increment age array\n");
+    printf("%d\n", incrementAgeArray());
+    printf("%d\n", incrementAgeArray());
+    printf("%d\n", incrementAgeArray());
+    printf("%d\n", incrementAgeArray());
+    printf("%d\n", incrementAgeArray());
+
+    printf("Types definition: enumerate and strctures");
+    WEEKDAY day = wednesday;
+
+    if (day == wednesday) { /*this condition is equivalent since every item in the enum 
+    definition is paired to an integer, internally: if (wednesday = 2) {*/
+        printf('It is Wednesday');
+    } else {
+        printf('It is not Wednesday');
+    }
 
     printf("\n\n\n");
     return 0;
