@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "calculate_age.h"
 
 // Declare new types and constants here
 typedef enum{
@@ -11,7 +12,23 @@ typedef enum{
         sunday
     } WEEKDAY;
 
-int main(void) {
+typedef struct {
+    int age;
+    char *name;
+} PERSON;
+
+// define a symbolic constant
+#define VALUE 1
+#define PI 3.14
+#define NAME "Flavio"
+
+// Define a macro
+#define POWER(x) ((x) * (x))
+
+// int main(void) {
+// To accept parameters from the command line when the command launches
+int main(int argc, char *argv[]) {
+
     printf("Hello World!\n");
 
     // Implicit conversion is performed since age is an integer.
@@ -60,8 +77,9 @@ int main(void) {
     printf("%ld\n", sizeof(my_age));
     printf("%ld\n\n", sizeof(int));
 
-    // printf("%ld\n\n", sizeof(boolean)); There is no boolean type in C?
-
+    // printf(" BOOOOOOOLEEANNNN: %ld\n\n", sizeof(bool)); // There is no boolean type in C? There is a boolean type called: bool
+    // Boolean is not working. Why? 
+    
     // POINTERS
     int *address, *another_address,  another_age;
     address = &age;
@@ -80,49 +98,87 @@ int main(void) {
     printf("Third price: %u\n", *(prices + 2));
 
     char name[20];
-    // printf("Enter your name: ");
-    // scanf("%s", name);
-    // printf("you entered %s\n\n", name); /*It does not print all my name whenever I separate it with spaces. Why?*/
+    printf("Enter your name: ");
+    scanf("%s", name);
+    printf("you entered %s\n\n", name); /*It does not print all my name whenever I separate it with spaces. Why?*/
 
     // STATIC VARIABLE: a variable which initialixed at 0 if no initial value is specified
     // and it retains the value across function calls.
-    int incrementAge() {
-        static int age; /* We can also omit initializing age to 0 in static int age = 0; , and just write
-static int age; because static variables are automatically set to 0 when created. */
-        age++;
-        return age;
-    }
 
-    printf("Increment age\n");
-    printf("%d\n", incrementAge());
-    printf("%d\n", incrementAge());
-    printf("%d\n", incrementAge());
-    printf("%d\n", incrementAge());
-    printf("%d\n", incrementAge());
-    printf("%d\n", incrementAge());
+    // int incrementAge(){
+    //     static int age;
+    //     age++;
+    //     return age;
+    // }
+    /* We can also omit initializing age to 0 in static int age = 0; , and just write
+        static int age; because static variables are automatically set to 0 when created. */
 
-    int incrementAgeArray(); {
-        static int ages[3];
-        ages[0]++;
-        return ages[0];
-    }
+    // printf("Increment age\n");
+    // printf("%d\n", incrementAge());
+    // printf("%d\n", incrementAge());
+    // printf("%d\n", incrementAge());
+    // printf("%d\n", incrementAge());
+    // printf("%d\n", incrementAge());
+    // printf("%d\n", incrementAge());
 
-    printf("Increment age array\n");
-    printf("%d\n", incrementAgeArray());
-    printf("%d\n", incrementAgeArray());
-    printf("%d\n", incrementAgeArray());
-    printf("%d\n", incrementAgeArray());
-    printf("%d\n", incrementAgeArray());
+    // int incrementAgeArray(){
+    //     static int ages[3];
+    //     ages[0]++;
+    //     return ages[0];
+    // }
 
-    printf("Types definition: enumerate and strctures");
+    // printf("Increment age array\n");
+    // printf("%d\n", incrementAgeArray());
+    // printf("%d\n", incrementAgeArray());
+    // printf("%d\n", incrementAgeArray());
+    // printf("%d\n", incrementAgeArray());
+    // printf("%d\n", incrementAgeArray());
+
+    printf("\n\nTypes definition: enumerate and strctures\n");
     WEEKDAY day = wednesday;
 
-    if (day == wednesday) { /*this condition is equivalent since every item in the enum 
-    definition is paired to an integer, internally: if (wednesday = 2) {*/
-        printf('It is Wednesday');
+    if (day == wednesday) { 
+        /* 
+        * this condition is equivalent since every item in the enum definition
+        * is paired to an integer, internally: if (wednesday = 2) {
+        */
+        printf("It is Wednesday\n");
     } else {
-        printf('It is not Wednesday');
+        printf("It is not Wednesday\n");
     }
+
+    PERSON feujio = { 20, "Feujio"};
+    printf("%s, age %u\n", feujio.name, feujio.age);
+
+    printf("List of arguments from command line\n");
+    for (int i = 0; i < argc; i++) {
+        printf("%s\n", argv[i]);
+    }
+    // This system works great for simple needs. For more complex needs, there are commonly used packages like **getopt**
+
+
+    // Header files
+    printf("\n\nHeader files\n");
+    printf("%u\n", calculateAge(1983));
+    // And with more complex setups, a Makefile is necessary to tell the compiler how to compile the program.
+
+    // PREPROCESSOR
+    // It parses our program and makes sure that the compiler gets all the things it needs before going on with the process
+    // Symbolic constants are very useful because we can give names to values without creating variables at compilation time.
+    
+    // Use a macro
+    printf("\n\nUse macro to compute the power of 4: %u\n", POWER(4)); //16
+    // The big difference with functions is that macros do not specify the type of
+    // their arguments or return values, which might be handy in some cases.
+    // Can we have multiline macros?
+
+    // If defined (#ifdef) and if not defined (#ifndef)
+    // We can check if a symbolic constant or a macro is defined using #ifdef :
+    #ifdef VALUE
+        printf("Value is defined\n");
+    #else
+        printf("Value is not defined\n");
+    #endif
 
     printf("\n\n\n");
     return 0;
